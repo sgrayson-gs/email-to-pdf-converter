@@ -16,7 +16,7 @@ sourceCompatibility = 1.7
 
 /* git version */
 def gitVersionDetails = versionDetails()
-version = gitVersionDetails.lastTag
+version = gitVersionDetails.lastTag + '-gs'
 
 jar {
     manifest {
