@@ -50,7 +50,8 @@ public class MimeMessageParser {
 
         if (p.isMimeType("multipart/*")) {
             Multipart mp = (Multipart) p.getContent();
-            for (int i = 0; i < mp.getCount(); i++) {
+            // Start from the top so html is first
+            for (int i = mp.getCount() - 1; i >= 0; i--) {
                 walkMimeStructure(mp.getBodyPart(i), level + 1, callback);
             }
         }
@@ -140,7 +141,8 @@ public class MimeMessageParser {
 
                 // use text/plain entries only when we found nothing before
                 if (result.getEntry().isEmpty() || p.isMimeType("text/html")) {
-                    result.setEntry(stringContent);
+                    String newEntry = stringContent.concat(result.getEntry());
+                    result.setEntry(newEntry);
                     result.setContentType(new ContentType(p.getContentType()));
                 }
             }
