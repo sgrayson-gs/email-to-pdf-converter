@@ -135,6 +135,11 @@ public class MimeMessageParser {
                 String stringContent = getStringContent(p);
                 boolean isAttachment = Part.ATTACHMENT.equalsIgnoreCase(p.getDisposition());
 
+                if (p.isMimeType("text/plain")) {
+                    stringContent = stringContent.replace("<", "&lt;");
+                    stringContent = stringContent.replace(">", "&gt;");
+                }
+
                 if (Strings.isNullOrEmpty(stringContent) || isAttachment) {
                     return;
                 }
